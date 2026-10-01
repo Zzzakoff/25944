@@ -23,25 +23,25 @@ static long get_num(const char *s){
     return v;
 }
 
-static void show_ids(void){
+static void show_ids(){
     printf("uid=%ld euid=%ld gid=%ld egid=%ld\n",
            (long)getuid(), (long)geteuid(),
            (long)getgid(), (long)getegid());
 }
 
-static void make_leader(void){
+static void make_leader(){
     if (setpgid(0, 0) == -1)
         perror("setpgid");
     else
         printf("pgid=%ld\n", (long)getpgrp());
 }
 
-static void show_pids(void){
+static void show_pids(){
     printf("pid=%ld ppid=%ld pgid=%ld\n",
            (long)getpid(), (long)getppid(), (long)getpgrp());
 }
 
-static void show_ulimit(void){
+static void show_ulimit(){
     long v = ulimit(UL_GETFSIZE, 0);
     if (v == -1 && errno != 0)
         perror("ulimit");
@@ -54,7 +54,7 @@ static void set_ulimit(const char *s){
         perror("ulimit");
 }
 
-static void show_core(void){
+static void show_core(){
     struct rlimit r;
     if (getrlimit(RLIMIT_CORE, &r) == -1){
         perror("getrlimit");
@@ -77,7 +77,7 @@ static void set_core(const char *s){
         perror("setrlimit");
 }
 
-static void show_cwd(void){
+static void show_cwd(){
     char buf[PATH_MAX];
 
     if (getcwd(buf, sizeof(buf)) == NULL)
@@ -86,7 +86,7 @@ static void show_cwd(void){
         printf("cwd=%s\n", buf);
 }
 
-static void show_env(void){
+static void show_env(){
     char **e;
     for (e = environ; *e != NULL; e++)
         printf("%s\n", *e);
